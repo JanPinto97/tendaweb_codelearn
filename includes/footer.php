@@ -1,6 +1,5 @@
 <footer>
-    <hr>
-    <p class="nom">&copy; Jan Pintó &copy;</p>
+    <p class="nom">&copy; Codelearn &copy;</p>
 </footer>
 </body>
 </html>
