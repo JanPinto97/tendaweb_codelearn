@@ -35,6 +35,7 @@ if (!$producte) {
     exit;
 }
 
+$base  = './';
 $titol = $producte['nom'];
 
 require_once 'includes/header.php';

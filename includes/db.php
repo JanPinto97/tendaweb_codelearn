@@ -8,7 +8,7 @@
 $host     = 'localhost';
 $nom_bd   = 'botiga';
 $usuari   = 'root';
-$password = '1234';
+$password = '1234'; // Contraseña per defecte es buida
 
 // Creem la connexió PDO utilitzant les variables de configuració
 try {

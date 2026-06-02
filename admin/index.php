@@ -43,7 +43,9 @@ if ($categoria_sel > 0) {
 
 $productes = $stmt->fetchAll();
 
-require_once 'includes/header.php';
+$base  = '../';
+$titol = "Panel d'Admin";
+require_once '../includes/header.php';
 ?>
 
 <!-- Capçalera del panell amb botó d'afegir -->
@@ -115,4 +117,4 @@ require_once 'includes/header.php';
     <?php endif; ?>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>

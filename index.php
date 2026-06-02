@@ -43,6 +43,8 @@ if ($categoria_sel > 0) {
 $productes = $stmt->fetchAll();
 
 // Carreguem la capçalera comuna
+$base  = './';
+$titol = 'Tenda Codelearn';
 require_once 'includes/header.php';
 ?>
 

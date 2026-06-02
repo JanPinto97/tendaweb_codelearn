@@ -51,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+$base  = './';
+$titol = 'Crear compte';
 require_once 'includes/header.php';
 ?>
 

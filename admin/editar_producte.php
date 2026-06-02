@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imatge = $producte['imatge'];
 
     // Comprovem els camps obligatoris
-    if (empty($nom) || empty($preu) || empty($estoc)) {
+    if ($nom === '' || $preu === '' || $estoc === '') {
         $error = 'Els camps nom, preu i estoc són obligatoris.';
 
     } elseif (!is_numeric($preu) || $preu < 0) {
@@ -122,7 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once 'includes/header.php';
+$base  = '../';
+$titol = 'Editar producte';
+require_once '../includes/header.php';
 ?>
 
 <!-- Missatge d'error si n'hi ha -->
@@ -181,4 +183,4 @@ require_once 'includes/header.php';
 
 </form>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>

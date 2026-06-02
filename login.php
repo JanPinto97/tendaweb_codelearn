@@ -47,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+$base  = './';
+$titol = 'Iniciar sessió';
 require_once 'includes/header.php';
 ?>
 
