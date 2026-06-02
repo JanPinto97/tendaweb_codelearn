@@ -9,7 +9,6 @@ require_once 'includes/auth.php';
 
 
 $error = '';
-$exit  = '';
 
 // Processem el formulari quan s'envia per POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,8 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-$base  = './';
-$titol = 'Crear compte';
+$base = './';
 require_once 'includes/header.php';
 ?>
 

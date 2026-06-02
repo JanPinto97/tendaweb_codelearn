@@ -19,32 +19,24 @@ $categories = $stmt->fetchAll();
 // --------------------------------------------------------
 $categoria_sel = isset($_GET['categoria']) ? (int)$_GET['categoria'] : 0;
 
+$sql = "SELECT p.*, c.nom AS categoria_nom
+        FROM productes p
+        LEFT JOIN categories c ON p.categoria_id = c.id";
+$params = [];
+
 if ($categoria_sel > 0) {
-    // Mostrem només els productes de la categoria seleccionada
-    $stmt = $pdo->prepare("
-        SELECT p.*, c.nom AS categoria_nom
-        FROM productes p
-        LEFT JOIN categories c ON p.categoria_id = c.id
-        WHERE p.categoria_id = ?
-        ORDER BY p.nom ASC
-    ");
-    $stmt->execute([$categoria_sel]);
-} else {
-    // Mostrem tots els productes
-    $stmt = $pdo->prepare("
-        SELECT p.*, c.nom AS categoria_nom
-        FROM productes p
-        LEFT JOIN categories c ON p.categoria_id = c.id
-        ORDER BY p.nom ASC
-    ");
-    $stmt->execute();
+    $sql .= " WHERE p.categoria_id = ?";
+    $params[] = $categoria_sel;
 }
 
+$sql .= " ORDER BY p.nom ASC";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 $productes = $stmt->fetchAll();
 
 // Carreguem la capçalera comuna
-$base  = './';
-$titol = 'Tenda Codelearn';
+$base = './';
 require_once 'includes/header.php';
 ?>
 

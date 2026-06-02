@@ -6,9 +6,11 @@
 
 require_once '../includes/db.php';
 require_once '../includes/auth.php';
+require_once '../includes/funcions.php';
 
+// Protegim la pàgina — només admins
+protegirAdmin('../login.php');
 
-$titol = 'Editar producte';
 $error = '';
 
 // --------------------------------------------------------
@@ -68,34 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } else {
 
-        // --------------------------------------------------------
         // Gestionem la pujada d'una nova imatge si s'ha seleccionat
-        // --------------------------------------------------------
-        if (!empty($_FILES['imatge']['name'])) {
-
-            $tipus_permesos = ['image/jpeg', 'image/png', 'image/webp'];
-            $tipus_fitxer   = $_FILES['imatge']['type'];
-
-            if (!in_array($tipus_fitxer, $tipus_permesos)) {
-                $error = 'La imatge ha de ser JPG, PNG o WEBP.';
-            } elseif ($_FILES['imatge']['size'] > 2 * 1024 * 1024) {
-                $error = 'La imatge no pot superar els 2MB.';
-            } else {
-                // Esborrem la imatge antiga si existia
-                if ($producte['imatge'] && file_exists('../uploads/' . $producte['imatge'])) {
-                    unlink('../uploads/' . $producte['imatge']);
-                }
-
-                // Generem un nom únic per a la nova imatge
-                $extensio = pathinfo($_FILES['imatge']['name'], PATHINFO_EXTENSION);
-                $imatge   = uniqid('prod_') . '.' . $extensio;
-
-                // Movem la nova imatge a la carpeta uploads
-                move_uploaded_file(
-                    $_FILES['imatge']['tmp_name'],
-                    '../uploads/' . $imatge
-                );
+        $resultat = pujarImatge($_FILES['imatge'], '../uploads');
+        if ($resultat['error']) {
+            $error = $resultat['error'];
+        } elseif ($resultat['nom']) {
+            // Si s'ha pujat una imatge nova, esborrem l'antiga
+            if ($producte['imatge'] && file_exists('../uploads/' . $producte['imatge'])) {
+                unlink('../uploads/' . $producte['imatge']);
             }
+            $imatge = $resultat['nom'];
         }
 
         // Actualitzem el producte si no hi ha errors
@@ -122,8 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$base  = '../';
-$titol = 'Editar producte';
+$base = '../';
 require_once '../includes/header.php';
 ?>
 

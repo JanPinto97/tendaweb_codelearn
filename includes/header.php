@@ -1,9 +1,11 @@
 <?php
 require_once __DIR__ . '/auth.php';
 
-// Valors per defecte (per si la pàgina no els defineix)
-$base  = $base  ?? './';
-$titol = $titol ?? 'Tenda Codelearn';
+// El títol depèn de si l'usuari és admin o no
+$titol = esAdmin() ? "Panell d'Admin" : 'CodeShop';
+
+// Ruta base per defecte (cada pàgina la pot sobreescriure abans del require)
+$base = $base ?? './';
 ?>
 
 <!DOCTYPE html>
@@ -21,9 +23,6 @@ $titol = $titol ?? 'Tenda Codelearn';
 
                 <!-- Menú per a usuaris autenticats -->
                 <span>Hola, <?= htmlspecialchars($_SESSION['nom']) ?></span>
-                <?php if (esAdmin()): ?>
-                    <a href="<?= $base ?>admin/index.php">Panel Admin</a>
-                <?php endif; ?>
                 <a href="<?= $base ?>logout.php">Tancar sessió</a>
             <?php else: ?>
 

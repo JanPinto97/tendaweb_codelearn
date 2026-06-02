@@ -47,8 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-$base  = './';
-$titol = 'Iniciar sessió';
+$base = './';
 require_once 'includes/header.php';
 ?>
 
@@ -74,5 +73,5 @@ require_once 'includes/header.php';
     <p>No tens compte? <a href="registre.php">Registra't</a></p>
 </div>
 <?php
-include "includes/footer.php";
+require_once 'includes/footer.php';
 ?>

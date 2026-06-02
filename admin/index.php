@@ -7,8 +7,8 @@
 require_once '../includes/db.php';
 require_once '../includes/auth.php';
 
-
-$titol = 'Panel d\'administració';
+// Protegim la pàgina — només admins
+protegirAdmin('../login.php');
 
 // --------------------------------------------------------
 // Obtenim totes les categories per al filtre
@@ -22,29 +22,23 @@ $categories = $stmt->fetchAll();
 // --------------------------------------------------------
 $categoria_sel = isset($_GET['categoria']) ? (int)$_GET['categoria'] : 0;
 
+$sql = "SELECT p.*, c.nom AS categoria_nom
+        FROM productes p
+        LEFT JOIN categories c ON p.categoria_id = c.id";
+$params = [];
+
 if ($categoria_sel > 0) {
-    $stmt = $pdo->prepare("
-        SELECT p.*, c.nom AS categoria_nom
-        FROM productes p
-        LEFT JOIN categories c ON p.categoria_id = c.id
-        WHERE p.categoria_id = ?
-        ORDER BY p.nom ASC
-    ");
-    $stmt->execute([$categoria_sel]);
-} else {
-    $stmt = $pdo->prepare("
-        SELECT p.*, c.nom AS categoria_nom
-        FROM productes p
-        LEFT JOIN categories c ON p.categoria_id = c.id
-        ORDER BY p.nom ASC
-    ");
-    $stmt->execute();
+    $sql .= " WHERE p.categoria_id = ?";
+    $params[] = $categoria_sel;
 }
 
+$sql .= " ORDER BY p.nom ASC";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 $productes = $stmt->fetchAll();
 
-$base  = '../';
-$titol = "Panel d'Admin";
+$base = '../';
 require_once '../includes/header.php';
 ?>
 

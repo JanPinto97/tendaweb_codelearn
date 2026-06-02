@@ -25,22 +25,22 @@ function esAdmin(): bool {
 
 // --------------------------------------------------------
 // Protegeix una pàgina d'admin
-// Si no és admin, redirigeix al login
+// Si no és admin, redirigeix al login indicat
 // --------------------------------------------------------
-function protegirAdmin(): void {
+function protegirAdmin(string $login_url = 'login.php'): void {
     if (!esAdmin()) {
-        header('Location: /botiga/login.php');
+        header("Location: $login_url");
         exit;
     }
 }
 
 // --------------------------------------------------------
 // Protegeix una pàgina de client autenticat
-// Si no està autenticat, redirigeix al login
+// Si no està autenticat, redirigeix al login indicat
 // --------------------------------------------------------
-function protegirClient(): void {
+function protegirClient(string $login_url = 'login.php'): void {
     if (!estaAutenticat()) {
-        header('Location: /botiga/login.php');
+        header("Location: $login_url");
         exit;
     }
 }
