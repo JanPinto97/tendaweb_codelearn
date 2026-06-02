@@ -30,14 +30,22 @@ CREATE TABLE productes (
     FOREIGN KEY (categoria_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
--- Usuari admin per defecte
-INSERT INTO usuaris (nom, email, password, rol)
-VALUES (
-    'Administrador',
-    'admin@botiga.com',
-    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- password: "password"
-    'admin'
-);
+-- Dades inicials: usuaris
+INSERT INTO usuaris (nom, email, password, rol) VALUES
+('Administrador', 'admin@botiga.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+('Joan Garcia',   'joan@exemple.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'client');
 
--- Categories d'exemple
-INSERT INTO categories (nom) VALUES ('Roba'), ('Calçat'), ('Accessoris');
+-- Dades inicials: categories
+INSERT INTO categories (nom) VALUES
+('Roba'),
+('Calçat'),
+('Accessoris');
+
+-- Dades inicials: productes
+INSERT INTO productes (nom, descripcio, preu, estoc, categoria_id) VALUES
+('Samarreta codelearn',   'Samarreta de cotó 100%',     9.99,  50, 1),
+('Pantalons texans',   'Texans slim fit',              29.99,  20, 1),
+('Sabates esportives', 'Sabates per córrer',           49.99,   0, 2),
+('Cinturó de cuir',    'Cinturó negre de cuir genuí', 14.99,  15, 3),
+('Gorra de cotó',      'Gorra ajustable unisex',       12.99,  30, 3),
+('Botes de muntanya',  'Botes impermeables',           89.99,  10, 2);

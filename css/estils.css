@@ -1,10 +1,344 @@
+/* ========================================================
+   Estils generals — Tenda Online Codelearn
+   ======================================================== */
+
 body {
-    background-color: #f0f0f0;
+    background-color: #fff;
+    color: #1e293b;
     font-family: Arial, sans-serif;
     margin: 0;
-    text-align: center;
+    line-height: 1.5;
 }
 
+/* --------------------------------------------------------
+   Capçalera i navegació
+   -------------------------------------------------------- */
 header {
+    background-color: #f5fdec;
+    border-bottom: 2px solid #89ea3a;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: #1e293b;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #89ea3a;
+}
+
+
+nav span {
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------
+   Contingut principal
+   -------------------------------------------------------- */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+/* --------------------------------------------------------
+   Filtre de categories
+   -------------------------------------------------------- */
+.filtres {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filtres a {
+    background-color: #fff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.filtres a:hover {
+    border-color: #89ea3a;
+}
+
+.filtres a.actiu {
+    background-color: #89ea3a;
+    border-color: #89ea3a;
+    color: #1e293b;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------
+   Graella de productes
+   -------------------------------------------------------- */
+.productes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.producte-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.producte-imatge {
+    display: block;
+}
+
+.producte-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.imatge-placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: #f5fdec;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.producte-image {
+    margin-top: 150px;
+}
+
+.producte-info {
+    padding: 15px;
+}
+
+.producte-info .categoria {
+    display: inline-block;
+    background-color: #f5fdec;
+    color: #1e293b;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.producte-info h2 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.preu {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.estoc {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.estoc.disponible {
+    color: #1e293b;
+}
+
+.estoc.esgotat {
+    color: #b91c1c;
+}
+
+.missatge-buit {
     text-align: center;
+    padding: 40px;
+    color: #1e293b;
+}
+
+/* --------------------------------------------------------
+   Pàgina de detall del producte
+   -------------------------------------------------------- */
+.breadcrumb {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: #1e293b;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #89ea3a;
+}
+
+.producte-detall {
+    max-width: 600px;
+}
+
+.producte-detall .producte-imatge img,
+.producte-detall .imatge-placeholder {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.producte-detall .producte-info {
+    padding: 0;
+}
+
+.producte-detall .estoc {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.producte-detall .btn {
+    display: block;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.descripcio {
+    margin: 15px 0;
+}
+
+/* --------------------------------------------------------
+   Botons
+   -------------------------------------------------------- */
+.btn {
+    display: inline-block;
+    background-color: #89ea3a;
+    color: #1e293b;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #6fc92a;
+}
+
+.btn-eliminar {
+    background-color: #fff;
+    color: #b91c1c;
+    border: 1px solid #b91c1c;
+}
+
+.btn-eliminar:hover {
+    background-color: #b91c1c;
+    color: #fff;
+}
+
+/* --------------------------------------------------------
+   Barra d'administració
+   -------------------------------------------------------- */
+.admin-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-accions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* --------------------------------------------------------
+   Formularis
+   -------------------------------------------------------- */
+.formulari-admin {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formulari-admin label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.formulari-admin input,
+.formulari-admin textarea,
+.formulari-admin select {
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.formulari-admin input:focus,
+.formulari-admin textarea:focus,
+.formulari-admin select:focus {
+    outline: none;
+    border-color: #89ea3a;
+}
+
+.formulari-admin button {
+    margin-top: 15px;
+    align-self: flex-start;
+}
+
+.previsualitzacio-imatge {
+    max-width: 200px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.text-gris {
+    color: #64748b;
+    font-style: italic;
+}
+
+/* --------------------------------------------------------
+   Peu de pàgina
+   -------------------------------------------------------- */
+footer {
+    background-color: #f5fdec;
+    border-top: 2px solid #89ea3a;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer .nom {
+    margin: 0;
+    font-size: 14px;
 }
