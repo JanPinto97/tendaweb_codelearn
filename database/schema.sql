@@ -10,6 +10,7 @@ CREATE TABLE usuaris (
     email    VARCHAR(150)  NOT NULL UNIQUE,
     password VARCHAR(255)  NOT NULL,
     rol      ENUM('client','admin') NOT NULL DEFAULT 'client',
+    gastat   DECIMAL(10,2) NOT NULL DEFAULT 0,
     creat_a  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

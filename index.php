@@ -40,27 +40,42 @@ $base = './';
 require_once 'includes/header.php';
 ?>
 
+<!-- Avís de compra realitzada (compra simulada) -->
+<?php if (isset($_GET['compra']) && $_GET['compra'] === 'ok'): ?>
+    <p class="avis-compra">Compra realitzada correctament. Gràcies!</p>
+<?php endif; ?>
+
 <!-- Filtre per categories -->
 <section class="filtres">
-    <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
-        Tots
-    </a>
-    <?php foreach ($categories as $categoria): ?>
-        <a href="index.php?categoria=<?= $categoria['id'] ?>"
-           class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
-            <?= htmlspecialchars($categoria['nom']) ?>
+    <div class="filtres-categories">
+        <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
+            Tots
         </a>
-    <?php endforeach; ?>
+        <?php foreach ($categories as $categoria): ?>
+            <a href="index.php?categoria=<?= $categoria['id'] ?>"
+               class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
+                <?= htmlspecialchars($categoria['nom']) ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Carro: enllaç amb el nombre d'articles, a la punta dreta -->
+    <!-- Els admins no compren, així que no veuen el carro -->
+    <?php if (!esAdmin()): ?>
+        <a href="carro.php" class="carro-enllac">
+            Carro (<?= array_sum($_SESSION['carro'] ?? []) ?>)
+        </a>
+    <?php endif; ?>
 </section>
 
 <!-- Llistat de productes -->
-<section class="productes-grid">
+<section class="productes-graella">
     <?php if (empty($productes)): ?>
         <p class="missatge-buit">No hi ha productes disponibles.</p>
 
     <?php else: ?>
         <?php foreach ($productes as $producte): ?>
-            <article class="producte-card">
+            <article class="producte-targeta">
 
                 <!-- Imatge del producte (clicable) -->
                 <a href="producte.php?id=<?= $producte['id'] ?>" class="producte-imatge">
@@ -68,7 +83,7 @@ require_once 'includes/header.php';
                         <img src="uploads/<?= htmlspecialchars($producte['imatge']) ?>"
                              alt="<?= htmlspecialchars($producte['nom']) ?>">
                     <?php else: ?>
-                        <div class="imatge-placeholder">Sense imatge</div>
+                        <div class="imatge-buida">Sense imatge</div>
                     <?php endif; ?>
                 </a>
 
@@ -85,9 +100,16 @@ require_once 'includes/header.php';
                         <span class="estoc esgotat">Esgotat</span>
                     <?php endif; ?>
 
-                    <a href="producte.php?id=<?= $producte['id'] ?>" class="btn">
+                    <a href="producte.php?id=<?= $producte['id'] ?>" class="boto boto-blanc">
                         Veure producte
                     </a>
+
+                    <!-- Botó d'afegir al carro (només si hi ha estoc i no és admin) -->
+                    <?php if ($producte['estoc'] > 0 && !esAdmin()): ?>
+                        <a href="afegir_carro.php?id=<?= $producte['id'] ?>" class="boto boto-carro">
+                            Afegir al carro
+                        </a>
+                    <?php endif; ?>
                 </div>
 
             </article>

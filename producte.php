@@ -40,7 +40,7 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Navegació enrere -->
-<nav class="breadcrumb">
+<nav class="engruna">
     <a href="index.php">← Tornar a la botiga</a>
 </nav>
 
@@ -53,7 +53,7 @@ require_once 'includes/header.php';
             <img src="uploads/<?= htmlspecialchars($producte['imatge']) ?>"
                  alt="<?= htmlspecialchars($producte['nom']) ?>">
         <?php else: ?>
-            <div class="imatge-placeholder">Sense imatge</div>
+            <div class="imatge-buida">Sense imatge</div>
         <?php endif; ?>
     </div>
 
@@ -80,7 +80,14 @@ require_once 'includes/header.php';
             <span class="estoc esgotat">Esgotat</span>
         <?php endif; ?>
 
-        <a href="index.php" class="btn">← Tornar a la botiga</a>
+        <!-- Botó d'afegir al carro (només si hi ha estoc i no és admin) -->
+        <?php if ($producte['estoc'] > 0 && !esAdmin()): ?>
+            <a href="afegir_carro.php?id=<?= $producte['id'] ?>" class="boto boto-carro">
+                Afegir al carro
+            </a>
+        <?php endif; ?>
+
+        <a href="index.php" class="boto boto-blanc">← Tornar a la botiga</a>
     </div>
 
 </section>

@@ -6,6 +6,9 @@ $titol = esAdmin() ? "Panell d'Admin" : 'CodeShop';
 
 // Ruta base per defecte (cada pàgina la pot sobreescriure abans del require)
 $base = $base ?? './';
+
+// El títol porta a l'inici (el panell si és admin, la botiga si no)
+$inici = esAdmin() ? $base . 'admin/index.php' : $base . 'index.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +20,13 @@ $base = $base ?? './';
 </head>
 <body>
     <header>
-        <h1><?= htmlspecialchars($titol) ?></h1>
+        <h1><a href="<?= $inici ?>"><?= htmlspecialchars($titol) ?></a></h1>
         <nav>
             <?php if (estaAutenticat()): ?>
 
                 <!-- Menú per a usuaris autenticats -->
                 <span>Hola, <?= htmlspecialchars($_SESSION['nom']) ?></span>
+                <a href="<?= $base ?>perfil.php">El meu compte</a>
                 <a href="<?= $base ?>logout.php">Tancar sessió</a>
             <?php else: ?>
 

@@ -43,32 +43,34 @@ require_once '../includes/header.php';
 ?>
 
 <!-- Capçalera del panell amb botó d'afegir -->
-<div class="admin-toolbar">
+<div class="admin-barra">
     <h2>Productes</h2>
-    <a href="nou_producte.php" class="btn btn-nou">+ Afegir producte</a>
+    <a href="nou_producte.php" class="boto boto-nou">+ Afegir producte</a>
 </div>
 
 <!-- Filtre per categories — idèntic al frontend -->
 <section class="filtres">
-    <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
-        Tots
-    </a>
-    <?php foreach ($categories as $categoria): ?>
-        <a href="index.php?categoria=<?= $categoria['id'] ?>"
-           class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
-            <?= htmlspecialchars($categoria['nom']) ?>
+    <div class="filtres-categories">
+        <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
+            Tots
         </a>
-    <?php endforeach; ?>
+        <?php foreach ($categories as $categoria): ?>
+            <a href="index.php?categoria=<?= $categoria['id'] ?>"
+               class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
+                <?= htmlspecialchars($categoria['nom']) ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
 </section>
 
 <!-- Llistat de productes -->
-<section class="productes-grid">
+<section class="productes-graella">
     <?php if (empty($productes)): ?>
         <p class="missatge-buit">No hi ha productes. <a href="nou_producte.php">Afegeix el primer!</a></p>
 
     <?php else: ?>
         <?php foreach ($productes as $producte): ?>
-            <article class="producte-card">
+            <article class="producte-targeta">
 
                 <!-- Imatge del producte (clicable — porta a l'edició) -->
                 <a href="editar_producte.php?id=<?= $producte['id'] ?>" class="producte-imatge">
@@ -76,7 +78,7 @@ require_once '../includes/header.php';
                         <img src="../uploads/<?= htmlspecialchars($producte['imatge']) ?>"
                              alt="<?= htmlspecialchars($producte['nom']) ?>">
                     <?php else: ?>
-                        <div class="imatge-placeholder">Sense imatge</div>
+                        <div class="imatge-buida">Sense imatge</div>
                     <?php endif; ?>
                 </a>
 
@@ -95,11 +97,11 @@ require_once '../includes/header.php';
 
                     <!-- Botons d'acció — només visibles a l'admin -->
                     <div class="admin-accions">
-                        <a href="editar_producte.php?id=<?= $producte['id'] ?>" class="btn btn-editar">
+                        <a href="editar_producte.php?id=<?= $producte['id'] ?>" class="boto boto-editar">
                             Editar
                         </a>
                         <a href="eliminar_producte.php?id=<?= $producte['id'] ?>"
-                           class="btn btn-eliminar"
+                           class="boto boto-eliminar"
                            onclick="return confirm('Segur que vols eliminar aquest producte?')">
                             Eliminar
                         </a>

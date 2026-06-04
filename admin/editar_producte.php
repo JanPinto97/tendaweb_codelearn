@@ -115,9 +115,9 @@ require_once '../includes/header.php';
     <p class="error"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<div class="admin-toolbar">
+<div class="admin-barra">
     <h2>Editar producte</h2>
-    <a href="index.php" class="btn">← Tornar</a>
+    <a href="index.php" class="boto">← Tornar</a>
 </div>
 
 <!-- Formulari d'edició — preomplert amb les dades actuals -->
@@ -162,7 +162,7 @@ require_once '../includes/header.php';
     <label for="imatge">Canviar imatge (JPG, PNG, WEBP — màx. 2MB)</label>
     <input type="file" id="imatge" name="imatge" accept="image/jpeg,image/png,image/webp">
 
-    <button type="submit" class="btn btn-nou">Guardar canvis</button>
+    <button type="submit" class="boto boto-nou">Guardar canvis</button>
 
 </form>
 

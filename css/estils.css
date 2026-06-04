@@ -10,6 +10,10 @@ body {
     line-height: 1.5;
 }
 
+h2 {
+    margin-top: 0;
+}
+
 /* --------------------------------------------------------
    Capçalera i navegació
    -------------------------------------------------------- */
@@ -28,6 +32,12 @@ header h1 {
     font-size: 24px;
 }
 
+/* El títol és un enllaç cap a l'inici, però manté l'aspecte de text */
+header h1 a {
+    color: #1e293b;
+    text-decoration: none;
+}
+
 nav a {
     color: #1e293b;
     text-decoration: none;
@@ -37,7 +47,6 @@ nav a {
 nav a:hover {
     color: #89ea3a;
 }
-
 
 nav span {
     margin-left: 20px;
@@ -53,20 +62,25 @@ main {
     padding: 30px 20px;
 }
 
-h2 {
-    margin-top: 0;
-}
-
 /* --------------------------------------------------------
-   Filtre de categories
+   Filtre de categories i enllaç del carro
    -------------------------------------------------------- */
 .filtres {
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Grup de categories — pot ocupar diverses línies */
+.filtres-categories {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
+/* Les pastilles de categories i el carro comparteixen estil */
 .filtres a {
     background-color: #fff;
     color: #1e293b;
@@ -84,42 +98,43 @@ h2 {
 .filtres a.actiu {
     background-color: #89ea3a;
     border-color: #89ea3a;
-    color: #1e293b;
+    font-weight: bold;
+}
+
+/* L'enllaç del carro només afegeix la negreta */
+.carro-enllac {
     font-weight: bold;
 }
 
 /* --------------------------------------------------------
    Graella de productes
    -------------------------------------------------------- */
-.productes-grid {
+.productes-graella {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
 }
 
-.producte-card {
+.producte-targeta {
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fff;
 }
 
 .producte-imatge {
     display: block;
 }
 
-.producte-card img {
+.producte-targeta img,
+.imatge-buida {
     width: 100%;
     height: 180px;
     object-fit: cover;
     display: block;
 }
 
-.imatge-placeholder {
-    width: 100%;
-    height: 180px;
+.imatge-buida {
     background-color: #f5fdec;
-    color: #1e293b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,19 +145,18 @@ h2 {
     padding: 15px;
 }
 
-.producte-info .categoria {
+.producte-info h2 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.categoria {
     display: inline-block;
     background-color: #f5fdec;
-    color: #1e293b;
     font-size: 12px;
     padding: 2px 8px;
     border-radius: 10px;
     margin-bottom: 8px;
-}
-
-.producte-info h2 {
-    font-size: 18px;
-    margin: 5px 0;
 }
 
 .preu {
@@ -157,10 +171,6 @@ h2 {
     margin-bottom: 10px;
 }
 
-.estoc.disponible {
-    color: #1e293b;
-}
-
 .estoc.esgotat {
     color: #b91c1c;
 }
@@ -168,23 +178,22 @@ h2 {
 .missatge-buit {
     text-align: center;
     padding: 40px;
-    color: #1e293b;
 }
 
 /* --------------------------------------------------------
    Pàgina de detall del producte
    -------------------------------------------------------- */
-.breadcrumb {
+.engruna {
     margin-bottom: 20px;
     font-size: 14px;
 }
 
-.breadcrumb a {
+.engruna a {
     color: #1e293b;
     text-decoration: none;
 }
 
-.breadcrumb a:hover {
+.engruna a:hover {
     color: #89ea3a;
 }
 
@@ -193,7 +202,7 @@ h2 {
 }
 
 .producte-detall .producte-imatge img,
-.producte-detall .imatge-placeholder {
+.producte-detall .imatge-buida {
     width: 100%;
     height: 350px;
     object-fit: cover;
@@ -206,11 +215,10 @@ h2 {
 }
 
 .producte-detall .estoc {
-    display: block;
     margin-bottom: 20px;
 }
 
-.producte-detall .btn {
+.producte-detall .boto {
     display: block;
     width: fit-content;
     margin-top: 10px;
@@ -223,7 +231,7 @@ h2 {
 /* --------------------------------------------------------
    Botons
    -------------------------------------------------------- */
-.btn {
+.boto {
     display: inline-block;
     background-color: #89ea3a;
     color: #1e293b;
@@ -236,25 +244,89 @@ h2 {
     cursor: pointer;
 }
 
-.btn:hover {
+.boto:hover {
     background-color: #6fc92a;
 }
 
-.btn-eliminar {
+/* Botó blanc — veure producte */
+.boto-blanc {
+    background-color: #fff;
+    border: 1px solid #89ea3a;
+}
+
+.boto-blanc:hover {
+    background-color: #f2f2f2;
+    border-color: #94a3b8;
+}
+
+/* Botó verd d'afegir al carro — sota el de veure producte */
+.boto-carro {
+    display: block;
+    width: fit-content;
+    margin-top: 8px;
+}
+
+/* Botó blanc amb vora vermella — eliminar / treure */
+.boto-eliminar {
     background-color: #fff;
     color: #b91c1c;
     border: 1px solid #b91c1c;
 }
 
-.btn-eliminar:hover {
+.boto-eliminar:hover {
     background-color: #b91c1c;
     color: #fff;
 }
 
 /* --------------------------------------------------------
-   Barra d'administració
+   Pàgina del carro
    -------------------------------------------------------- */
-.admin-toolbar {
+.avis-compra {
+    background-color: #f5fdec;
+    border: 1px solid #89ea3a;
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.carro-taula {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.carro-taula th,
+.carro-taula td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.carro-taula thead th {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.total-etiqueta {
+    text-align: right;
+    font-weight: bold;
+}
+
+.total-import {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.carro-taula .boto-eliminar {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* --------------------------------------------------------
+   Administració
+   -------------------------------------------------------- */
+.admin-barra {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -321,6 +393,67 @@ h2 {
 .text-gris {
     color: #64748b;
     font-style: italic;
+}
+
+/* --------------------------------------------------------
+   Pàgines de login i registre
+   -------------------------------------------------------- */
+.formulari-container {
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.formulari-container h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.formulari-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formulari-container label {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.formulari-container input {
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.formulari-container input:focus {
+    outline: none;
+    border-color: #89ea3a;
+}
+
+.formulari-container button {
+    margin-top: 15px;
+}
+
+.formulari-container p {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+/* Total de diners gastats a la pàgina del compte */
+.formulari-container .gastat {
+    background-color: #f5fdec;
+    border: 1px solid #89ea3a;
+    border-radius: 6px;
+    padding: 12px 18px;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 /* --------------------------------------------------------

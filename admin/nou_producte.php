@@ -84,9 +84,9 @@ require_once '../includes/header.php';
     <p class="error"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<div class="admin-toolbar">
+<div class="admin-barra">
     <h2>Afegir producte</h2>
-    <a href="index.php" class="btn">← Tornar</a>
+    <a href="index.php" class="boto">← Tornar</a>
 </div>
 
 <!-- Formulari de nou producte -->
@@ -121,7 +121,7 @@ require_once '../includes/header.php';
     <label for="imatge">Imatge (JPG, PNG, WEBP — màx. 2MB)</label>
     <input type="file" id="imatge" name="imatge" accept="image/jpeg,image/png,image/webp">
 
-    <button type="submit" class="btn btn-nou">Afegir producte</button>
+    <button type="submit" class="boto boto-nou">Afegir producte</button>
 
 </form>
 

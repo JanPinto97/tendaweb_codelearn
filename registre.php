@@ -75,7 +75,7 @@ require_once 'includes/header.php';
         <label for="password">Contrasenya</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Registrar-se</button>
+        <button type="submit" class="boto">Registrar-se</button>
     </form>
 
     <p>Ja tens compte? <a href="login.php">Inicia sessió</a></p>
