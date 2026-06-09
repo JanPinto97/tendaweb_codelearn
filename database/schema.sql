@@ -31,6 +31,25 @@ CREATE TABLE productes (
     FOREIGN KEY (categoria_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
+-- Comandes (compres simulades) de cada usuari
+CREATE TABLE comandes (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    usuari_id INT NOT NULL,
+    data      DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total     DECIMAL(10,2) NOT NULL DEFAULT 0,
+    FOREIGN KEY (usuari_id) REFERENCES usuaris(id) ON DELETE CASCADE
+);
+
+-- Productes que formen part de cada comanda (es desa el nom i el preu del moment)
+CREATE TABLE comanda_productes (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    comanda_id INT NOT NULL,
+    nom        VARCHAR(200)  NOT NULL,
+    preu       DECIMAL(10,2) NOT NULL,
+    quantitat  INT           NOT NULL,
+    FOREIGN KEY (comanda_id) REFERENCES comandes(id) ON DELETE CASCADE
+);
+
 -- Dades inicials: usuaris
 INSERT INTO usuaris (nom, email, password, rol) VALUES
 ('Administrador', 'admin@botiga.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),

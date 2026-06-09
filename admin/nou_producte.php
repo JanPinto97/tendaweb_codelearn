@@ -26,12 +26,13 @@ $categories = $stmt->fetchAll();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Recollim i netejem les dades del formulari
-    $nom          = trim($_POST['nom'] ?? '');
-    $descripcio   = trim($_POST['descripcio'] ?? '');
-    $preu         = trim($_POST['preu'] ?? '');
-    $estoc        = trim($_POST['estoc'] ?? '');
-    $categoria_id = (int)($_POST['categoria_id'] ?? 0);
-    $imatge       = null;
+    $nom            = trim($_POST['nom'] ?? '');
+    $descripcio     = trim($_POST['descripcio'] ?? '');
+    $preu           = trim($_POST['preu'] ?? '');
+    $estoc          = trim($_POST['estoc'] ?? '');
+    $categoria_id   = (int)($_POST['categoria_id'] ?? 0);
+    $nova_categoria = trim($_POST['nova_categoria'] ?? '');
+    $imatge         = null;
 
     // Comprovem els camps obligatoris
     if ($nom === '' || $preu === '' || $estoc === '') {
@@ -55,6 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Inserim el producte si no hi ha errors
         if (empty($error)) {
+
+            // Si s'ha escrit una categoria nova, la creem
+            // (o reutilitzem la que ja existeixi amb aquell nom)
+            if ($nova_categoria !== '') {
+                $stmt = $pdo->prepare("SELECT id FROM categories WHERE nom = ?");
+                $stmt->execute([$nova_categoria]);
+                $existent = $stmt->fetch();
+
+                if ($existent) {
+                    $categoria_id = $existent['id'];
+                } else {
+                    $stmt = $pdo->prepare("INSERT INTO categories (nom) VALUES (?)");
+                    $stmt->execute([$nova_categoria]);
+                    $categoria_id = $pdo->lastInsertId();
+                }
+            }
+
             $stmt = $pdo->prepare("
                 INSERT INTO productes (nom, descripcio, preu, estoc, imatge, categoria_id)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -117,6 +135,11 @@ require_once '../includes/header.php';
             </option>
         <?php endforeach; ?>
     </select>
+
+    <label for="nova_categoria">O crear una categoria nova</label>
+    <input type="text" id="nova_categoria" name="nova_categoria"
+           placeholder="Nom de la nova categoria (té prioritat sobre la de dalt)"
+           value="<?= htmlspecialchars($_POST['nova_categoria'] ?? '') ?>">
 
     <label for="imatge">Imatge (JPG, PNG, WEBP — màx. 2MB)</label>
     <input type="file" id="imatge" name="imatge" accept="image/jpeg,image/png,image/webp">

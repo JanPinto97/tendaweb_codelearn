@@ -47,17 +47,20 @@ require_once 'includes/header.php';
 
 <!-- Filtre per categories -->
 <section class="filtres">
-    <div class="filtres-categories">
-        <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
-            Tots
-        </a>
-        <?php foreach ($categories as $categoria): ?>
-            <a href="index.php?categoria=<?= $categoria['id'] ?>"
-               class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
-                <?= htmlspecialchars($categoria['nom']) ?>
+    <details class="desplegable-categories">
+        <summary>Categories ▾</summary>
+        <div class="llista-categories">
+            <a href="index.php" class="<?= $categoria_sel === 0 ? 'actiu' : '' ?>">
+                Tots
             </a>
-        <?php endforeach; ?>
-    </div>
+            <?php foreach ($categories as $categoria): ?>
+                <a href="index.php?categoria=<?= $categoria['id'] ?>"
+                   class="<?= $categoria_sel === $categoria['id'] ? 'actiu' : '' ?>">
+                    <?= htmlspecialchars($categoria['nom']) ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </details>
 
     <!-- Carro: enllaç amb el nombre d'articles, a la punta dreta -->
     <!-- Els admins no compren, així que no veuen el carro -->

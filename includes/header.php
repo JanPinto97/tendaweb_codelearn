@@ -26,7 +26,9 @@ $inici = esAdmin() ? $base . 'admin/index.php' : $base . 'index.php';
 
                 <!-- Menú per a usuaris autenticats -->
                 <span>Hola, <?= htmlspecialchars($_SESSION['nom']) ?></span>
-                <a href="<?= $base ?>perfil.php">El meu compte</a>
+                <?php if (!esAdmin()): ?>
+                    <a href="<?= $base ?>perfil.php">El meu compte</a>
+                <?php endif; ?>
                 <a href="<?= $base ?>logout.php">Tancar sessió</a>
             <?php else: ?>
 
