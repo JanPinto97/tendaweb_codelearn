@@ -64,6 +64,10 @@ require_once '../includes/header.php';
             <?php endforeach; ?>
         </div>
     </details>
+
+    <a href="categories.php" class="carro-enllac">
+        Gestionar Categories
+    </a>
 </section>
 
 <!-- Llistat de productes -->
