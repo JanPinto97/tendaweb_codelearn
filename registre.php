@@ -6,50 +6,30 @@
 
 require_once 'includes/db.php';
 require_once 'includes/auth.php';
-
+require_once 'includes/funcions.php';
 
 $error = '';
 
 // Processem el formulari quan s'envia per POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Recollim i netejem les dades del formulari
-    $nom      = trim($_POST['nom'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
+    // Recollim les dades del formulari
+    $nom      = $_POST['nom'] ?? '';
+    $email    = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-    // Comprovem que els camps no estiguin buits
-    if (empty($nom) || empty($email) || empty($password)) {
-        $error = 'Omple tots els camps.';
+    // Creem sempre un client des del registre públic
+    $resultat = crearUsuari($pdo, $nom, $email, $password);
 
-    // Comprovem que la contrasenya tingui mínim 6 caràcters
-    } elseif (strlen($password) < 6) {
-        $error = 'La contrasenya ha de tenir mínim 6 caràcters.';
-
+    if (!$resultat['ok']) {
+        $error = $resultat['error'];
     } else {
-        // Comprovem que l'email no estigui ja registrat
-        $stmt = $pdo->prepare("SELECT id FROM usuaris WHERE email = ?");
-        $stmt->execute([$email]);
-
-        if ($stmt->fetch()) {
-            $error = 'Aquest email ja està registrat.';
-        } else {
-            // Hashegem la contrasenya abans de guardar-la
-            $hash = password_hash($password, PASSWORD_BCRYPT);
-
-            // Inserim el nou usuari com a client
-            $stmt = $pdo->prepare("
-                INSERT INTO usuaris (nom, email, password, rol)
-                VALUES (?, ?, ?, 'client')
-            ");
-            $stmt->execute([$nom, $email, $hash]);
-
-            // Redirigim al login amb missatge d'èxit
-            header('Location: login.php?registrat=1');
-            exit;
-        }
+        // Redirigim al login amb missatge d'èxit
+        header('Location: login.php?registrat=1');
+        exit;
     }
 }
+
 $base = './';
 require_once 'includes/header.php';
 ?>

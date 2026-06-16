@@ -37,3 +37,44 @@ function pujarImatge(array $fitxer, string $carpeta): array {
 
     return ['nom' => $nom_nou, 'error' => null];
 }
+
+// --------------------------------------------------------
+// Crea un usuari validant les dades i encriptant la contrasenya
+// Retorna ['ok' => true, 'error' => null]
+// o      ['ok' => false, 'error' => 'missatge d\'error']
+// --------------------------------------------------------
+function crearUsuari(PDO $pdo, string $nom, string $email, string $password, string $rol = 'client'): array {
+    $nom      = trim($nom);
+    $email    = trim($email);
+    $password = trim($password);
+    $rol      = trim($rol);
+
+    if ($nom === '' || $email === '' || $password === '') {
+        return ['ok' => false, 'error' => 'Omple tots els camps.'];
+    }
+
+    if (strlen($password) < 6) {
+        return ['ok' => false, 'error' => 'La contrasenya ha de tenir mínim 6 caràcters.'];
+    }
+
+    if (!in_array($rol, ['client', 'admin'], true)) {
+        return ['ok' => false, 'error' => 'El rol seleccionat no és vàlid.'];
+    }
+
+    $stmt = $pdo->prepare("SELECT id FROM usuaris WHERE email = ?");
+    $stmt->execute([$email]);
+
+    if ($stmt->fetch()) {
+        return ['ok' => false, 'error' => 'Aquest email ja està registrat.'];
+    }
+
+    $hash = password_hash($password, PASSWORD_BCRYPT);
+
+    $stmt = $pdo->prepare("
+        INSERT INTO usuaris (nom, email, password, rol)
+        VALUES (?, ?, ?, ?)
+    ");
+    $stmt->execute([$nom, $email, $hash, $rol]);
+
+    return ['ok' => true, 'error' => null];
+}
